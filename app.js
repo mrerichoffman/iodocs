@@ -1186,6 +1186,36 @@ app.post('/upload', function(req, res) {
   res.redirect('back');
 });
 
+app.get('/params/:api', function(req, res) {
+    req.params.api=req.params.api.replace(/\/$/,'');
+    res.locals.apiInfo = JSON.parse(JSON.minify(fs.readFileSync(path.join(config.apiConfigDir, req.params.api + '.json'), 'utf8')));
+    
+    var i = 0;
+    var response = {};
+    response.resources = [];
+    for (var resource in res.locals.apiInfo.resources) {
+        var j = 0;
+        response.resources[i] = {};
+        response.resources[i].methods = [];
+        response.resources[i].resourceName = resource;
+        for (var method in res.locals.apiInfo.resources[resource].methods) {
+            var k = 0;
+            response.resources[i].methods[j] = {};
+            response.resources[i].methods[j].methodName = method;
+            response.resources[i].methods[j].params = [];
+
+            for (var param in res.locals.apiInfo.resources[resource].methods[method].parameters) {
+                response.resources[i].methods[j].params[k] = param;
+                k++;
+            }
+            j++;
+        }
+        i++;
+    }
+    res.set("Content-Type", "application/json");
+    res.send(response);
+});
+
 // API shortname, all lowercase
 app.get('/:api([^\.]+)', function(req, res) {
     req.params.api=req.params.api.replace(/\/$/,'');

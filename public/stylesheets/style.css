@@ -469,7 +469,17 @@ li {
   margin-top: 0;
 }
 
+.method div.errors h5 {
+  margin-top: 0;
+}
+
 .method div.headers .fields {
+  display: none;
+  padding: 0 15px;
+  margin-bottom: 15px;
+}
+
+.method .samples {
   display: none;
   padding: 0 15px;
   margin-bottom: 15px;
@@ -484,7 +494,21 @@ li {
   margin: 11px 0 0 10px;
 }
 
+.method div.errors .indicator {
+  border-width: 5px;
+  border-color: transparent transparent transparent #333;
+  border-style: solid;
+  display: block;
+  float: left;
+  margin: 11px 0 0 10px;
+}
+
 .method div.headers.expanded .indicator {
+  border-color: #333 transparent transparent transparent;
+  margin-top: 14px;
+}
+
+.method div.errors.expanded .indicator {
   border-color: #333 transparent transparent transparent;
   margin-top: 14px;
 }

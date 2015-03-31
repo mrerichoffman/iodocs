@@ -123,3 +123,42 @@ block content
                               table(id=methodKey)
                               - if (!method['read-only'])
                                   input(type='submit', id=method.name, value='Try it!', class=methodKey)
+
+                              br
+                              br
+                              - if (method.HTTPCodes && method.HTTPCodes.length > 0)
+                                  div.errors
+                                      h5.title
+                                          div.indicator
+                                          span Responses
+                                      span.samples
+                                             br
+                                             - if (method.additionalResponseInfo && method.additionalResponseInfo.length > 0)
+                                                   - each paragraph in method.additionalResponseInfo
+                                                         p #{paragraph}
+                                                         br
+                                             Strong HTTP Status Codes
+                                             br
+                                             br
+                                             - each code in method.HTTPCodes
+                                                   p #{code}
+                                             br
+                                             br
+                                             - if (method.ErrorCodes && method.ErrorCodes.length > 0)
+                                                   Strong Error Codes
+                                                   br
+                                                   br
+                                                   - each code in method.ErrorCodes
+                                                         p #{code.code} : #{code.description} (http://developer.hayneedle.com/docs/errors/#{code.code}}
+                                                   br
+                                                   br
+                                             - if (method.SampleResponses && method.SampleResponses.length > 0)
+                                                 strong Sample Response JSON
+                                                 br
+                                                 br
+
+                                                 - each response in method.SampleResponses
+                                                      pre
+                                                          #{JSON.stringify(response, null, 4)}
+                                                      br
+                                                      br
