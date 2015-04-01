@@ -1126,7 +1126,7 @@ function checkObjVal(obj /*, val, level1, level2, ... levelN*/) {
 // Passes variables to the view
 function dynamicHelpers(req, res, next) {
     if (req.params.api) {
-        res.locals.apiInfo = JSON.parse(JSON.minify(fs.readFileSync(path.join(config.apiConfigDir, req.params.api + '.json'), 'utf8')));
+        res.locals.apiInfo = JSON.parse(fs.readFileSync(path.join(config.apiConfigDir, req.params.api + '.json'), 'utf8'));
         res.locals.apiName = req.params.api;
 
         // If the cookie says we're authed for this particular API, set the session to authed as well
@@ -1188,10 +1188,12 @@ app.post('/upload', function(req, res) {
 
 app.get('/params/:api', function(req, res) {
     req.params.api=req.params.api.replace(/\/$/,'');
-    res.locals.apiInfo = JSON.parse(JSON.minify(fs.readFileSync(path.join(config.apiConfigDir, req.params.api + '.json'), 'utf8')));
+
+res.locals.apiInfo = JSON.parse(fs.readFileSync(path.join(config.apiConfigDir, req.params.api + '.json'), 'utf8'));
+   // res.locals.apiInfo = JSON.parse(JSON.minify(fs.readFileSync(path.join(config.apiConfigDir, req.params.api + '.json'), 'utf8')));
     
     var i = 0;
-    var response = {};
+    var response = {statusCode:200};
     response.resources = [];
     for (var resource in res.locals.apiInfo.resources) {
         var j = 0;
